@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black,
 
       appBar: AppBar(
-        title: Text("Nexora Fitness 💪🔥"),
+        title: Text("Nexora Fitness"),
 
         backgroundColor: const Color.fromARGB(255, 197, 54, 244),
       ),
