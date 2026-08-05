@@ -19,7 +19,7 @@ class FlexibleExample extends StatelessWidget {
               flex: 1,
               child: Container(
                 height: 120,
-                color: Colors.red,
+                color: const Color.fromARGB(255, 83, 44, 99),
                 child: const Center(
                   child: Text("Flex 1"),
                 ),
@@ -29,7 +29,7 @@ class FlexibleExample extends StatelessWidget {
               flex: 2,
               child: Container(
                 height: 120,
-                color: Colors.blue,
+                color: const Color.fromARGB(255, 181, 153, 218),
                 child: const Center(
                   child: Text("Flex 2", style: TextStyle(color: Colors.white)),
                 ),
