@@ -30,10 +30,10 @@ class CarteiraDigital extends StatelessWidget {
         padding: EdgeInsets.all(20),
         children: [
           CartaoBanco(
-            corCartao: Colors.blue,
+            corCartao: const Color.fromARGB(255, 98, 7, 168),
             banco: "Banco SESI",
-            numero: "1234 5678 9012 3456",
-            nome: "Leonardo Kronka Rodrigues",
+            numero: "1234 4789 5236 4587",
+            nome: "Priscila Silvério Rodrigues",
             validade: "12/30",
             bandeira: "assets/images/mastercard.png",
             logo: "assets/images/logo_sesi.jpg",
@@ -42,10 +42,10 @@ class CarteiraDigital extends StatelessWidget {
           SizedBox(height: 20),
 
           CartaoBanco(
-            corCartao: Colors.orange,
+            corCartao: const Color.fromARGB(255, 29, 242, 103),
             banco: "Inter",
             numero: "1234 5678 9012 3456",
-            nome: "Leonardo Kronka Rodrigues",
+            nome: "Priscila Silvério Rodrigues",
             validade: "03/32",
             bandeira: "assets/images/mastercard.png",
             logo: "assets/images/logo_inter.png",
@@ -56,24 +56,14 @@ class CarteiraDigital extends StatelessWidget {
           CartaoBanco(
             corCartao: const Color.fromARGB(255, 116, 72, 192),
             banco: "Nubank",
-            numero: "1234 5678 9012 3456",
-            nome: "Leonardo Kronka Rodrigues",
+            numero: "1234 4587 6314 7964",
+            nome: "Priscila Silvério Rodrigues",
             validade: "07/31",
             bandeira: "assets/images/mastercard.png",
             logo: "assets/images/logo_nubank.png",
           ),
 
           SizedBox(height: 20),
-
-          CartaoBanco(
-            corCartao: const Color.fromARGB(255, 255, 149, 0),
-            banco: "Itaú",
-            numero: "1234 5678 9012 3456",
-            nome: "Leonardo Kronka Rodrigues",
-            validade: "03/30",
-            bandeira: "assets/images/mastercard.png",
-            logo: "assets/images/logo_itau.svg",
-          ),
         ],
       ),
     );
