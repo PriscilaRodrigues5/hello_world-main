@@ -1,46 +1,124 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
-//Run | Debug | Profile
 void main() {
-  runApp(const MyApp());
+  runApp(const MeuApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MeuApp extends StatelessWidget {
+  const MeuApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text("Minha tela")),
-        body: Center(
+      debugShowCheckedModeBanner: false,
+      title: 'Distância até minha casa',
+      home: const LocalizacaoPage(),
+    );
+  }
+}
+
+class LocalizacaoPage extends StatefulWidget {
+  const LocalizacaoPage({super.key});
+
+  @override
+  State<LocalizacaoPage> createState() => _LocalizacaoPageState();
+}
+
+class _LocalizacaoPageState extends State<LocalizacaoPage> {
+  // 1. Substitua estas coordenadas pelas da sua casa real
+  final double casaLatitude = -21.473031664437148;
+  final double casaLongitude = -47.01769933318802;
+
+  String resultadoTexto = 'Clique no botão para calcular a distância.';
+
+  Future<void> calcularDistancia() async {
+    // Checagem e solicitação de permissões
+    bool servicoAtivo = await Geolocator.isLocationServiceEnabled();
+    if (!servicoAtivo) {
+      await Geolocator.openLocationSettings();
+      return;
+    }
+
+    LocationPermission permissao = await Geolocator.checkPermission();
+    if (permissao == LocationPermission.denied) {
+      permissao = await Geolocator.requestPermission();
+    }
+
+    if (permissao == LocationPermission.denied ||
+        permissao == LocationPermission.deniedForever) {
+      return;
+    }
+
+    // Obtém a posição atual do GPS (Escola)
+    Position posicaoAtual = await Geolocator.getCurrentPosition();
+
+    // 2. Calcula a distância entre a localização atual e a casa (em metros)
+    double distanciaEmMetros = Geolocator.distanceBetween(
+      posicaoAtual.latitude,
+      posicaoAtual.longitude,
+      casaLatitude,
+      casaLongitude,
+    );
+
+    // 3. Formata e atualiza a mensagem na tela
+    setState(() {
+      if (distanciaEmMetros >= 1000) {
+        double km = distanciaEmMetros / 1000;
+        resultadoTexto = 'Distância: ${km.toStringAsFixed(2)} km';
+      } else {
+        resultadoTexto = 'Distância: ${distanciaEmMetros.toStringAsFixed(0)} metros';
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Distância até minha casa'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
-                Icons.apple,
-                size: 60,
-                color: const Color.fromARGB(255, 255, 0, 0),
+              // Ícone da casa
+              const Icon(
+                Icons.home,
+                size: 80,
+                color: Colors.blue,
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-              Text(
-                "D.S é o melhor curso do SESI?",
+              // Título principal
+              const Text(
+                'Distância entre a escola e minha casa',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 22,
-                  color: const Color.fromARGB(255, 34, 0, 255),
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 30),
 
+              // Exibição da instrução ou do resultado
+              Text(
+                resultadoTexto,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 16),
+              ),
+
+              const SizedBox(height: 30),
+
+              // Botão para disparar a ação
               ElevatedButton(
-                onPressed: () {
-                  print("Usuário clicou");
-                },
-                child: Text("Curtir"),
+                onPressed: calcularDistancia,
+                child: const Text('Calcular distância'),
               ),
             ],
           ),
